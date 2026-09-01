@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Services\CartService;
 use App\Support\OrderMode;
+use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
