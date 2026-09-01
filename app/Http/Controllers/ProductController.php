@@ -16,6 +16,8 @@ class ProductController extends Controller
             ->take(4)
             ->get();
 
-        return view('pages.product-detail', compact('product', 'related'));
+        $price = number_format($product->price, 2, '.', '');
+
+        return view('pages.product-detail', compact('product', 'related', 'price'));
     }
 }
