@@ -31,7 +31,7 @@ class HomeController extends Controller
                 'subtitle' => 'Visit us at 1675 Shelburne Rd, South Burlington, VT 05403',
                 'cta_primary' => 'Get Directions',
                 'cta_secondary' => 'Contact Us',
-                'image' => 'https://images.unsplash.com/photo-1562141961-b5f1e805e1af?w=1920&q=80',
+                'image' => 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1920&q=80',
                 'tag' => 'Visit Us',
             ],
         ]);
