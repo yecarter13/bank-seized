@@ -160,21 +160,4 @@
     </div>
 </section>
 
-<script type="application/ld+json">
-{
-    "@@context": "https://schema.org",
-    "@type": "ItemList",
-    "itemListElement": [
-        @foreach($products as $i => $product)
-        {
-            "@type": "ListItem",
-            "position": {{ $i + 1 }},
-            "name": "{{ addslashes($product->name) }}",
-            "url": "{{ route('product.show', $product->slug) }}"
-        }{{ $loop->last ? '' : ',' }}
-        @endforeach
-    ]
-}
-</script>
-
 @endsection

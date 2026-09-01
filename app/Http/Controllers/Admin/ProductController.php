@@ -44,22 +44,13 @@ class ProductController extends Controller
             'stock_quantity' => 'integer|min:0',
             'rating' => 'numeric|min:0|max:5',
             'review_count' => 'integer|min:0',
-            'meta_title' => 'nullable|string|max:255',
-            'meta_description' => 'nullable|string',
         ]);
 
         $data['slug'] = Str::slug($data['name']);
         $data['is_new'] = $request->boolean('is_new');
         $data['is_active'] = $request->boolean('is_active');
         if (empty($data['sku'])) {
-            $data['sku'] = 'AP-' . strtoupper(Str::random(6));
-        }
-        if (empty($data['meta_title'])) {
-            $brand = $data['brand'] ?? '';
-            $data['meta_title'] = $data['name'] . ($brand ? ' — ' . $brand : '') . ' | Bank Seized Cars';
-        }
-        if (empty($data['meta_description'])) {
-            $data['meta_description'] = $data['name'] . ' at Bank Seized Cars. Full inspection report, verified vehicle, expert support. ' . ($data['brand'] ?? '') . ' quality. Contact us today.';
+            $data['sku'] = 'BSC-' . strtoupper(Str::random(6));
         }
 
         if ($request->hasFile('image_file')) {
@@ -105,22 +96,13 @@ class ProductController extends Controller
             'stock_quantity' => 'integer|min:0',
             'rating' => 'numeric|min:0|max:5',
             'review_count' => 'integer|min:0',
-            'meta_title' => 'nullable|string|max:255',
-            'meta_description' => 'nullable|string',
         ]);
 
         $data['slug'] = Str::slug($data['name']);
         $data['is_new'] = $request->boolean('is_new');
         $data['is_active'] = $request->boolean('is_active');
         if (empty($data['sku'])) {
-            $data['sku'] = 'AP-' . strtoupper(Str::random(6));
-        }
-        if (empty($data['meta_title'])) {
-            $brand = $data['brand'] ?? '';
-            $data['meta_title'] = $data['name'] . ($brand ? ' — ' . $brand : '') . ' | Bank Seized Cars';
-        }
-        if (empty($data['meta_description'])) {
-            $data['meta_description'] = $data['name'] . ' at Bank Seized Cars. Full inspection report, verified vehicle, expert support. ' . ($data['brand'] ?? '') . ' quality. Contact us today.';
+            $data['sku'] = 'BSC-' . strtoupper(Str::random(6));
         }
 
         if ($request->hasFile('image_file')) {

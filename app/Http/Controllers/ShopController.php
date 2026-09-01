@@ -150,22 +150,16 @@ class ShopController extends Controller
         }
 
         $categoryTitle = null;
-        $metaDescription = null;
         if ($currentCategory) {
-            $categoryTitle = $currentCategory->name . ' Bank Seized Cars — Bank Seized Cars for Sale';
-            $metaDescription = "Shop premium {$currentCategory->name} bank seized cars. Fast delivery across the US. Quality seized vehicles at great prices.";
+            $categoryTitle = $currentCategory->name . ' — Bank Seized Cars for Sale';
         } elseif ($makeName) {
-            $categoryTitle = $makeName . ' Bank Seized Cars — Bank Seized Cars for Sale';
-            $metaDescription = "Find quality {$makeName} bank seized cars. Wide range of seized vehicles with fast delivery.";
+            $categoryTitle = $makeName . ' — Bank Seized Cars for Sale';
         } elseif ($request->filled('search')) {
             $searchTerm = trim($request->search);
-            $categoryTitle = ucfirst($searchTerm) . ' — Bank Seized Cars — Bank Seized Cars for Sale';
-            $metaDescription = "Browse {$total} results for '{$searchTerm}'. Bank seized cars at great prices with fast delivery.";
+            $categoryTitle = ucfirst($searchTerm) . ' — Bank Seized Cars for Sale';
         }
 
-        $noindex = $request->has('page') && $request->page > 1; // noindex paginated pages
-
-        return view('pages.shop', compact('makes', 'categories', 'years', 'products', 'total', 'makeName', 'makeLogo', 'currentCategory', 'categoryTitle', 'metaDescription', 'noindex'));
+        return view('pages.shop', compact('makes', 'categories', 'years', 'products', 'total', 'makeName', 'makeLogo', 'currentCategory', 'categoryTitle'));
     }
 
     public function categories()

@@ -11,7 +11,6 @@ class Product extends Model
         'category_id', 'name', 'slug', 'description', 'specifications',
         'price', 'old_price', 'down_payment', 'sku', 'compatibility', 'image', 'gallery_images',
         'brand', 'is_new', 'is_active', 'stock_quantity', 'rating', 'review_count',
-        'meta_title', 'meta_description',
         'year', 'mileage', 'transmission', 'fuel_type', 'vin',
         'exterior_color', 'interior_color', 'engine_size', 'drivetrain', 'condition_note',
     ];

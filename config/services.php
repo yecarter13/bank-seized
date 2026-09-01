@@ -2,18 +2,6 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Third Party Services
-    |--------------------------------------------------------------------------
-    |
-    | This file is for storing the credentials for third party services such
-    | as Mailgun, Postmark, AWS and more. This file provides the de facto
-    | location for this type of information, allowing packages to have
-    | a conventional file to locate the various service credentials.
-    |
-    */
-
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],
@@ -34,27 +22,5 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
-    'google' => [
-        'analytics_id' => env('GA_MEASUREMENT_ID'),
-        'search_console' => env('GOOGLE_SEARCH_CONSOLE'),
-    ],
-
-    'huggingface' => [
-        'api_key' => env('HF_API_KEY'),
-        'chat_model' => env('HF_CHAT_MODEL', 'mistralai/Mistral-7B-Instruct-v0.3'),
-        'embedding_model' => env('HF_EMBEDDING_MODEL', 'BAAI/bge-small-en-v1.5'),
-    ],
-
-    'gemini' => [
-        'api_key' => env('GEMINI_API_KEY'),
-    ],
-
-    'groq' => [
-        'api_key' => env('GROQ_API_KEY'),
-        'model' => env('GROQ_MODEL', 'llama-3.3-70b-versatile'),
-    ],
-
-
 
 ];

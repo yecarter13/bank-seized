@@ -8,7 +8,6 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -49,8 +48,6 @@ Route::post('/order/whatsapp', [CheckoutController::class, 'orderViaWhatsApp'])-
 Route::post('/buy-now/{slug}', [CheckoutController::class, 'buyNow'])->name('buy-now');
 
 Route::get('/images/proxy', [App\Http\Controllers\ImageProxyController::class, 'proxy'])->name('image.proxy');
-
-Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
