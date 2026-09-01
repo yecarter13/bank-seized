@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect x="10" y="45" width="18" height="12" rx="2" fill="#e85d04"/>
+  <rect x="28" y="35" width="18" height="22" rx="3" fill="#e85d04"/>
+  <rect x="46" y="35" width="18" height="22" rx="3" fill="#e85d04"/>
+  <rect x="64" y="40" width="20" height="17" rx="3" fill="#e85d04"/>
+  <rect x="72" y="57" width="8" height="6" rx="2" fill="#e85d04"/>
+  <rect x="20" y="57" width="8" height="6" rx="2" fill="#e85d04"/>
+  <rect x="14" y="63" width="17" height="3" rx="1.5" fill="#e85d04"/>
+  <rect x="69" y="63" width="17" height="3" rx="1.5" fill="#e85d04"/>
+  <rect x="12" y="40" width="76" height="5" rx="1" fill="#dc2f02"/>
+  <rect x="20" y="57" width="8" height="6" rx="3" fill="#111"/>
+  <rect x="72" y="57" width="8" height="6" rx="3" fill="#111"/>
+  <rect x="10" y="66" width="80" height="4" rx="1" fill="#e85d04"/>
+  <circle cx="24" cy="66" r="5" fill="#111"/>
+  <circle cx="24" cy="66" r="2.5" fill="#555"/>
+  <circle cx="76" cy="66" r="5" fill="#111"/>
+  <circle cx="76" cy="66" r="2.5" fill="#555"/>
+</svg>
