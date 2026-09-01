@@ -16,6 +16,9 @@ class CheckoutController extends Controller
             'subtotal' => $cart->subtotal(),
             'total' => $cart->total(),
             'count' => $cart->count(),
+            'shipping' => $cart->shippingCost(),
+            'freeShipping' => $cart->hasFreeShipping(),
+            'isFirstOrder' => $cart->isFirstOrder(),
         ]);
     }
 
