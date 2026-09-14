@@ -189,26 +189,6 @@
         <input type="hidden" name="gallery_images" id="galleryInput" value="{{ old('gallery_images', isset($storedGallery) && $storedGallery ? json_encode($storedGallery) : '[]') }}">
     </div>
 
-    <div class="mb-4 p-4 bg-purple-50 border border-purple-200 rounded-xl">
-        <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                <label class="text-sm font-medium text-automotive-900">AI Description Generator</label>
-            </div>
-            <span class="text-xs text-automotive-400">Keywords separated by commas</span>
-        </div>
-        <div class="flex gap-2">
-            <input type="text" id="aiKeywords" placeholder="e.g. high-performance, ceramic, road-legal" class="flex-1 px-4 py-2 border border-purple-200 rounded-lg text-sm focus:outline-none focus:border-purple-400 transition-all">
-            <button type="button" id="generateAiBtn" class="px-5 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 text-white font-semibold rounded-lg text-sm transition-all duration-200 flex items-center gap-2 flex-shrink-0">
-                <svg id="ai-loader" class="w-4 h-4 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-                <svg id="ai-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                <span id="ai-btn-text">Generate</span>
-            </button>
-        </div>
-        <div id="ai-error" class="mt-2 hidden"></div>
-        <div id="ai-success" class="mt-2 hidden"></div>
-    </div>
-
     <div class="mb-4">
         <div class="flex items-center justify-between mb-1.5">
             <label class="block text-sm font-medium text-automotive-900">Description</label>
@@ -382,69 +362,6 @@ window.removeGalleryItem = function(btn) {
     document.getElementById('galleryInput').value = JSON.stringify(galleryUrls);
     item.remove();
 };
-
-document.getElementById('generateAiBtn')?.addEventListener('click', function() {
-    const name = document.getElementById('productName')?.value.trim();
-    const brand = document.getElementById('productBrand')?.value.trim();
-    const category = document.getElementById('categoryId')?.value;
-    const price = document.getElementById('productPrice')?.value;
-    const keywords = document.getElementById('aiKeywords')?.value.trim();
-    const errorEl = document.getElementById('ai-error');
-    const successEl = document.getElementById('ai-success');
-    const loader = document.getElementById('ai-loader');
-    const icon = document.getElementById('ai-icon');
-    const btnText = document.getElementById('ai-btn-text');
-
-    errorEl.classList.add('hidden');
-    successEl.classList.add('hidden');
-
-    if (!name && !keywords) {
-        errorEl.className = 'mt-2 p-2.5 bg-red-50 border border-red-200 rounded-lg text-red-600 text-xs flex items-center gap-2';
-        errorEl.innerHTML = '<svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg> Enter a product name or keywords to generate.';
-        errorEl.classList.remove('hidden');
-        (name ? document.getElementById('productName') : document.getElementById('aiKeywords'))?.focus();
-        return;
-    }
-
-    this.disabled = true;
-    loader.classList.remove('hidden');
-    icon.classList.add('hidden');
-    btnText.textContent = 'Generating...';
-
-    fetch('{{ route("admin.ai.generate") }}', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-        body: JSON.stringify({ name, brand, category_id: category, price, keywords })
-    })
-    .then(r => {
-        if (!r.ok) {
-            return r.json().then(err => { throw new Error(err.message || err.errors?.name?.[0] || 'Server error'); }).catch(() => { throw new Error('Server error (' + r.status + ')'); });
-        }
-        return r.json();
-    })
-    .then(data => {
-        let filled = 0;
-        if (data.description) { document.getElementById('productDescription').value = data.description; filled++; }
-        if (data.specifications) { document.getElementById('productSpecs').value = data.specifications; filled++; }
-
-
-        successEl.className = 'mt-2 p-2.5 bg-green-50 border border-green-200 rounded-lg text-green-700 text-xs flex items-center gap-2';
-        successEl.innerHTML = '<svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Done! ' + filled + ' field' + (filled > 1 ? 's' : '') + ' populated.';
-        successEl.classList.remove('hidden');
-        setTimeout(() => { successEl.classList.add('hidden'); }, 5000);
-    })
-    .catch(e => {
-        errorEl.className = 'mt-2 p-2.5 bg-red-50 border border-red-200 rounded-lg text-red-600 text-xs flex items-center gap-2';
-        errorEl.innerHTML = '<svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg> ' + e.message;
-        errorEl.classList.remove('hidden');
-    })
-    .finally(() => {
-        this.disabled = false;
-        loader.classList.add('hidden');
-        icon.classList.remove('hidden');
-        btnText.textContent = 'Generate';
-    });
-});
 </script>
 @endpush
 
