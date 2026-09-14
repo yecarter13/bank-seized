@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +8,10 @@
 </head>
 <body class="font-sans antialiased bg-automotive-50">
     <div class="min-h-screen flex">
-        <aside class="w-64 bg-automotive-900 min-h-screen flex-shrink-0 hidden lg:block">
+
+        <div id="admin-sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+        <aside id="admin-sidebar" class="fixed top-0 left-0 w-64 bg-automotive-900 min-h-screen flex-shrink-0 z-50 transform -translate-x-full lg:translate-x-0 lg:static lg:z-auto transition-transform duration-300">
             <div class="p-5 border-b border-automotive-700">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2.5">
                     <div class="w-8 h-8 bg-safety rounded-lg flex items-center justify-center">
@@ -53,11 +56,16 @@
             </nav>
         </aside>
 
-        <main class="flex-1">
-            <header class="bg-white border-b border-automotive-100 px-6 py-4 flex items-center justify-between">
-                <h1 class="text-xl font-bold text-automotive-900">@yield('title', 'Dashboard')</h1>
+        <main class="flex-1 min-w-0">
+            <header class="bg-white border-b border-automotive-100 px-4 sm:px-6 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <span class="text-sm text-automotive-500">{{ auth()->user()?->name ?? 'Admin' }}</span>
+                    <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-automotive-100 transition-colors">
+                        <svg class="w-6 h-6 text-automotive-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                    <h1 class="text-lg sm:text-xl font-bold text-automotive-900">@yield('title', 'Dashboard')</h1>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-sm text-automotive-500 hidden sm:inline">{{ auth()->user()?->name ?? 'Admin' }}</span>
                     @auth
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -66,7 +74,7 @@
                     @endauth
                 </div>
             </header>
-            <div class="p-6">
+            <div class="p-4 sm:p-6">
                 @if(session('success'))
                 <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl text-green-700 text-sm">{{ session('success') }}</div>
                 @endif
@@ -74,6 +82,15 @@
             </div>
         </main>
     </div>
+
+    <script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('admin-sidebar');
+        const overlay = document.getElementById('admin-sidebar-overlay');
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    }
+    </script>
     @stack('scripts')
 </body>
 </html>
